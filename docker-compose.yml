@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  backend:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+    container_name: ToDoApp
+
+  db:
+    image: couchbase/server-sandbox:7.0.0
+    ports:
+      - "8091-8095:8091-8095"
+      - "11210:11210"
+      - "9102:9102"
+    expose:
+      - "8091"
+      - "8092"
+      - "8093"
+      - "8094"
+      - "8095"
+      - "9102"
+      - "11210"
+    container_name: couchbase-sandbox-7.0.0
